@@ -246,6 +246,8 @@ static int parse_color_moved(const char *arg)
 {
 	if (!strcmp(arg, "no"))
 		return COLOR_MOVED_NO;
+	else if (!strcmp(arg, "plain"))
+		return COLOR_MOVED_PLAIN;
 	else if (!strcmp(arg, "zebra"))
 		return COLOR_MOVED_ZEBRA;
 	else
@@ -830,6 +832,9 @@ static void mark_color_as_moved(struct diff_options *o,
 		}
 
 		l->flags |= DIFF_SYMBOL_MOVED_LINE;
+
+		if (o->color_moved == COLOR_MOVED_PLAIN)
+			continue;
 
 		/* Check any potential block runs, advance each or nullify */
 		for (i = 0; i < pmb_nr; i++) {
